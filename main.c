@@ -332,7 +332,7 @@ int runprogram( int argc, char *argv[] )
 
             static const struct timeval timeout = {2,0};
             sigset_t origmask;
-            pthread_sigmask(SIG_SETMASK, &sigmask, &origmask);
+            pthread_sigmask(SIG_SETMASK, &sigmask_select, &origmask);
           int selret=select( masterpt+1, &readfd, NULL, NULL, &timeout);
             pthread_sigmask(SIG_SETMASK, &origmask, NULL);
 
