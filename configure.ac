@@ -13,11 +13,12 @@ AC_USE_SYSTEM_EXTENSIONS
 AC_PROG_CC
 
 # Checks for libraries.
+AC_CHECK_LIB(pthread, pthread_sigmask)
 
 # Checks for header files.
 AC_HEADER_STDC
 AC_HEADER_SYS_WAIT
-AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h unistd.h termios.h])
+AC_CHECK_HEADERS([fcntl.h stdlib.h string.h sys/ioctl.h unistd.h termios.h sys/time.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
