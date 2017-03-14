@@ -27,6 +27,7 @@
 #include <sys/wait.h>
 #include <sys/ioctl.h>
 #include <sys/select.h>
+#include <sys/time.h>
 
 #include <unistd.h>
 #include <fcntl.h>
@@ -329,7 +330,11 @@ int runprogram( int argc, char *argv[] )
 	    FD_ZERO(&readfd);
 	    FD_SET(masterpt, &readfd);
 
-	    int selret=pselect( masterpt+1, &readfd, NULL, NULL, NULL, &sigmask_select );
+            static const struct timeval timeout = {2,0};
+            sigset_t origmask;
+            pthread_sigmask(SIG_SETMASK, &sigmask, &origmask);
+          int selret=select( masterpt+1, &readfd, NULL, NULL, &timeout);
+            pthread_sigmask(SIG_SETMASK, &origmask, NULL);
 
 	    if( selret>0 ) {
 		if( FD_ISSET( masterpt, &readfd ) ) {
